@@ -11,6 +11,7 @@
 #include "utils.h"
 #include "AIsnake.h"
 
+
 int main(int argc, char * argv[]) {
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
@@ -32,9 +33,9 @@ int main(int argc, char * argv[]) {
     int count_score = 0;
     int highScore = loadHighScore();
     bool gameOver = false;
-    bool Continue = true;
+    bool paused = false;
+    bool Continue = false;
 
-    while(Continue){
         while (running) {
             while (SDL_PollEvent(&event)) {
                 if (event.type == SDL_QUIT) {
@@ -45,8 +46,22 @@ int main(int argc, char * argv[]) {
                         case SDLK_DOWN:  velX = 0; velY = 4; useMouseControl = false; break;
                         case SDLK_LEFT:  velX = -4; velY = 0; useMouseControl = false; break;
                         case SDLK_RIGHT: velX = 4; velY = 0; useMouseControl = false; break;
+                        case SDLK_SPACE: paused = true; break;
+                        case SDLK_r:
+                            gameOver = false;
+                            score = 0;
+                            count_score = 0;
+                            //level = 0;
+                            snake = Snake(SCREEN_WIDTH, SCREEN_HEIGHT);
+                            food.randomizePosition(SCREEN_WIDTH, SCREEN_HEIGHT);
+                            velX = 4;
+                            velY = 0;
+                            useMouseControl = false;
+                            aiSnake = AIsnake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, rand() % 4);
+                            paused = false;
+                            break;
                     }
-                } else if (event.type == SDL_MOUSEMOTION && !gameOver) {
+                } else if (event.type == SDL_MOUSEMOTION && !gameOver && !paused) {
                     useMouseControl = true;
                     int mouseX = event.motion.x;
                     int mouseY = event.motion.y;
@@ -60,14 +75,14 @@ int main(int argc, char * argv[]) {
                     }
                 }
             }
-    
-            if (!gameOver) {
-    
+
+            if (!gameOver && !paused ) {
+
                 snake.update(velX, velY);
                 aiSnake.update(snake.getHead().x, snake.getHead().y);
-    
+
                 if (snake.checkSelfCollision()) gameOver = true;
-    
+
                 if (snake.checkCollision(food.getX(), food.getY(), 8)) {
                     snake.grow();
                     food.randomizePosition(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -77,37 +92,68 @@ int main(int argc, char * argv[]) {
                         count_score -= 10;
                     }
                 }
-    
+
                 /*if(snake.checkCollision(aiSnake.getSegments()))
                 {
                     gameOver = true;
                 }*/
-    
-    
+
+
             }
-    
+
             SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
             SDL_RenderClear(renderer);
-    
+
             snake.draw(renderer);
             aiSnake.draw(renderer);
             food.draw(renderer);
-    
+
             renderText(renderer, font, "Score: " + std::to_string(score), 20, 20);
             renderText(renderer, font, "High Score: " + std::to_string(highScore), 20, 50);
 
-            
+             if (paused) {
+                renderText(renderer, font, "Paused", SCREEN_WIDTH / 2 - 30, SCREEN_HEIGHT / 2);
+            }
             if (gameOver) {
-              renderText(renderer, font, "Game Over!", SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT / 2);
-              renderText(renderer, font, "Do you want to play again ?", SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 2 + 10); 
-              saveHighScore(score);  //Save high score when game is over
-                
+                renderText(renderer, font, "Game Over!", SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT / 2);
+                renderText(renderer, font, "Do you want to play again?", SCREEN_WIDTH / 2 - 110, SCREEN_HEIGHT / 2 + 30);
+                renderText(renderer, font, "Choose Y: yes, N: no", SCREEN_WIDTH / 2 - 90, SCREEN_HEIGHT / 2 + 60);
+                saveHighScore(score);  //Save high score when game is over
+                while(SDL_PollEvent(&event)){
+                    if(event.type == SDL_QUIT){
+                        running = false;
+                    }
+                    else if (event.type == SDL_KEYDOWN){
+                        switch (event.key.keysym.sym){
+                        case SDLK_y:
+                            if(gameOver){
+                                gameOver = false;
+                                score = 0;
+                                count_score = 0;
+                                snake = Snake(SCREEN_WIDTH, SCREEN_HEIGHT); // Tạo snake mới
+                                food.randomizePosition(SCREEN_WIDTH, SCREEN_HEIGHT); // Tạo thức ăn mới
+                                velX = 4;
+                                velY = 0;
+                                useMouseControl = false;
+                                aiSnake = AIsnake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, rand() % 4);
+                                paused = false;
+                                cout << "game restart" << endl;
+                            }
+                            else cout << "error game restart" << endl;
+                            break;
+                            case SDLK_n:
+                                running = false;
+                            break;
+                        }
+                    }
+                }
+
+
+
             }
             SDL_RenderPresent(renderer);
             SDL_Delay(8);
         }
-    }
-
     close(window, renderer, font);
     return 0;
 }
