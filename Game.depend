@@ -1,0 +1,64 @@
+# depslib dependency file v1.0
+1742359987 source:d:\2024ky2\ltnc\game\main.cpp
+	<SDL.h>
+	<SDL_ttf.h>
+	<iostream>
+	<cstdlib>
+	<ctime>
+	<cmath>
+	<string>
+	"graphics.h"
+	"snake.h"
+	"food.h"
+	"utils.h"
+	"AIsnake.h"
+
+1742214314 source:d:\2024ky2\ltnc\game\food.cpp
+	"food.h"
+	<cstdlib>
+	"graphics.h"
+
+1742270035 d:\2024ky2\ltnc\game\food.h
+	"SDL.h"
+	"graphics.h"
+
+1742214737 d:\2024ky2\ltnc\game\graphics.h
+	<SDL.h>
+	<SDL_ttf.h>
+	<string>
+
+1742359959 source:d:\2024ky2\ltnc\game\snake.cpp
+	"snake.h"
+	"graphics.h"
+	<vector>
+	<cmath>
+
+1742359971 d:\2024ky2\ltnc\game\snake.h
+	<vector>
+	"graphics.h"
+	"SDL.h"
+
+1742210475 source:d:\2024ky2\ltnc\game\utils.cpp
+	"utils.h"
+	<iostream>
+	<fstream>
+
+1742210448 d:\2024ky2\ltnc\game\utils.h
+	<string>
+
+1742214788 source:d:\2024ky2\ltnc\game\graphics.cpp
+	"graphics.h"
+	<iostream>
+
+1742344749 source:d:\2024ky2\ltnc\game\aisnake.cpp
+	"AIsnake.h"
+	<cstdlib>
+	<cmath>
+
+1742269307 d:\2024ky2\ltnc\game\aisnake.h
+	<vector>
+	"snake.h"
+	"graphics.h"
+	<SDL.h>
+	<SDL_image.h>
+
