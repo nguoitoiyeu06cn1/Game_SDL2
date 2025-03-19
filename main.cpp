@@ -46,7 +46,8 @@ int main(int argc, char * argv[]) {
                         case SDLK_DOWN:  velX = 0; velY = 4; useMouseControl = false; break;
                         case SDLK_LEFT:  velX = -4; velY = 0; useMouseControl = false; break;
                         case SDLK_RIGHT: velX = 4; velY = 0; useMouseControl = false; break;
-                        case SDLK_SPACE: paused = true; break;
+                        case SDLK_SPACE:
+                            paused = true; break;
                         case SDLK_r:
                             gameOver = false;
                             score = 0;
@@ -113,6 +114,18 @@ int main(int argc, char * argv[]) {
 
              if (paused) {
                 renderText(renderer, font, "Paused", SCREEN_WIDTH / 2 - 30, SCREEN_HEIGHT / 2);
+                while(SDL_PollEvent(&event)){
+                    if(event.type == SDL_QUIT){
+                        running = false;
+                    }
+                    else if (event.type == SDL_KEYDOWN){
+                        switch (event.key.keysym.sym){
+                            case SDLK_SPACE:
+                            paused = false;
+                            break;
+                        }
+                    }
+                }
             }
             if (gameOver) {
                 renderText(renderer, font, "Game Over!", SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT / 2);
