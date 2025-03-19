@@ -32,6 +32,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="AIsnake.cpp" />
+		<Unit filename="AIsnake.h" />
 		<Unit filename="food.cpp" />
 		<Unit filename="food.h" />
 		<Unit filename="graphics.cpp">

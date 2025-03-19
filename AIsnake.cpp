@@ -35,10 +35,10 @@ void AIsnake::update(int playerSnakeX, int playerSnakeY)
     SnakeSegment newHead = {segments[0].x + (int)velX, segments[0].y + (int)velY};
 
     // wrap around logic
-    if(newHead.y < 0) newHead.y = 1000;
-    if(newHead.y > 1000) newHead.y = 0;
-    if(newHead.x < 0) newHead.x = 1500;
-    if(newHead.x > 1500) newHead.x = 0;
+    if(newHead.y < 0) newHead.y = 600;
+    if(newHead.y > 600) newHead.y = 0;
+    if(newHead.x < 0) newHead.x = 800;
+    if(newHead.x > 800) newHead.x = 0;
 
     segments.insert(segments.begin(), newHead);
     segments.pop_back();

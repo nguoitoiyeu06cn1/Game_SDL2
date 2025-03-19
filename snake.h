@@ -18,7 +18,7 @@ public:
     void update(double velX, double velY);
     void draw(SDL_Renderer* renderer);
     void grow();
-//    bool checkCollisions( vector<SnakeSegment>& otherSnakeSegments);
+    //bool checkCollisions( vector<SnakeSegment>& otherSnakeSegments);
     bool checkCollision(int foodX, int foodY, int foodRadius);
     bool checkSelfCollision();
     void reset(int startX, int startY);

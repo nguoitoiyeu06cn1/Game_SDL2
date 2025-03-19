@@ -2,7 +2,9 @@
 #include <iostream>
 #include <fstream>
 
+using namespace std;
 const std::string HIGH_SCORE_FILE = "highscore.txt";
+const string HIGH_LEVEL_FILE = "level.txt";
 
 int loadHighScore() {
     std::ifstream file(HIGH_SCORE_FILE);
@@ -25,6 +27,30 @@ void saveHighScore(int score) {
             file.close();
         } else {
             std::cerr << "Error opening high score file for writing." << std::endl;
+        }
+    }
+}
+int loadLevel(){
+    ifstream file(HIGH_LEVEL_FILE);
+    int highLevel = 0;
+    if(file.is_open()){
+        file >> highLevel;
+        file.close();
+    } else {
+        cout << "Error opening high level file for reading" << endl;
+    }
+    return highLevel;
+}
+void saveHighLevel(int level){
+    int highLevel = loadLevel();
+    if(level > highLevel){
+        ofstream file(HIGH_LEVEL_FILE);
+        if(file.is_open()){
+            file << level;
+            file.close();
+        }
+        else {
+            cout << "Error opening high level file for writing" << endl;
         }
     }
 }

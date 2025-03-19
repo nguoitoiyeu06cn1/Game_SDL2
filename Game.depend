@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1742359987 source:d:\2024ky2\ltnc\game\main.cpp
+1742399511 source:d:\2024ky2\ltnc\game\main.cpp
 	<SDL.h>
 	<SDL_ttf.h>
 	<iostream>
@@ -12,6 +12,8 @@
 	"food.h"
 	"utils.h"
 	"AIsnake.h"
+	"level.h"
+	"render.h"
 
 1742214314 source:d:\2024ky2\ltnc\game\food.cpp
 	"food.h"
@@ -22,35 +24,35 @@
 	"SDL.h"
 	"graphics.h"
 
-1742214737 d:\2024ky2\ltnc\game\graphics.h
+1742392279 d:\2024ky2\ltnc\game\graphics.h
 	<SDL.h>
 	<SDL_ttf.h>
 	<string>
 
-1742359959 source:d:\2024ky2\ltnc\game\snake.cpp
+1742393102 source:d:\2024ky2\ltnc\game\snake.cpp
 	"snake.h"
 	"graphics.h"
 	<vector>
 	<cmath>
 
-1742359971 d:\2024ky2\ltnc\game\snake.h
+1742388041 d:\2024ky2\ltnc\game\snake.h
 	<vector>
 	"graphics.h"
 	"SDL.h"
 
-1742210475 source:d:\2024ky2\ltnc\game\utils.cpp
+1742395468 source:d:\2024ky2\ltnc\game\utils.cpp
 	"utils.h"
 	<iostream>
 	<fstream>
 
-1742210448 d:\2024ky2\ltnc\game\utils.h
+1742394236 d:\2024ky2\ltnc\game\utils.h
 	<string>
 
-1742214788 source:d:\2024ky2\ltnc\game\graphics.cpp
+1742397014 source:d:\2024ky2\ltnc\game\graphics.cpp
 	"graphics.h"
 	<iostream>
 
-1742344749 source:d:\2024ky2\ltnc\game\aisnake.cpp
+1742392317 source:d:\2024ky2\ltnc\game\aisnake.cpp
 	"AIsnake.h"
 	<cstdlib>
 	<cmath>
@@ -61,4 +63,23 @@
 	"graphics.h"
 	<SDL.h>
 	<SDL_image.h>
+
+1742398383 d:\2024ky2\ltnc\game\level.h
+	<iostream>
+	"utils.h"
+
+1742398172 d:\2024ky2\ltnc\game\render.h
+	<SDL.h>
+	<SDL_ttf.h>
+	"graphics.h"
+	"utils.h"
+	"level.h"
+
+1742399949 source:d:\2024ky2\ltnc\game\level.cpp
+	"level.h"
+	<iostream>
+
+1742398810 source:d:\2024ky2\ltnc\game\render.cpp
+	"render.h"
+	<string>
 

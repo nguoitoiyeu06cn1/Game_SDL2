@@ -6,8 +6,8 @@
 #include <string>
 
 // Constants (consider putting these in a config file if you want them easily changeable)
-const int SCREEN_WIDTH = 1500;
-const int SCREEN_HEIGHT = 1000;
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
 
 bool init(SDL_Window*& window, SDL_Renderer*& renderer, TTF_Font*& font);
 void close(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font);

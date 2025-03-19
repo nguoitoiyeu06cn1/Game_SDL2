@@ -1,0 +1,18 @@
+#include "render.h"
+#include <string>
+
+void print_lose( SDL_Renderer*& renderer, TTF_Font*& font){
+    renderText(renderer, font, "Game Over!", SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT / 2);
+    renderText(renderer, font, "Do you want to play again?", SCREEN_WIDTH / 2 - 110, SCREEN_HEIGHT / 2 + 30);
+    renderText(renderer, font, "Choose Y: yes, N: no", SCREEN_WIDTH / 2 - 90, SCREEN_HEIGHT / 2 + 60);
+    saveHighScore(score);  //Save high score when game is over
+    saveHighLevel(level); // Save high level when game is over
+}
+void print_level_up(SDL_Renderer*& renderer, TTF_Font*& font)
+{
+    renderText(renderer, font, "Game Over!", SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT / 2);
+    renderText(renderer, font, "Your score is eligible to move up to a new level. ", SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 + 30);
+    renderText(renderer, font, "Do you want to play again?", SCREEN_WIDTH / 2 - 110, SCREEN_HEIGHT / 2 + 30);
+    saveHighScore(score);  //Save high score when game is over
+    saveHighLevel(level); // Save high level when game is over
+}

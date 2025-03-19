@@ -55,3 +55,5 @@ void renderText(SDL_Renderer* renderer, TTF_Font* font, const std::string& text,
     SDL_FreeSurface(textSurface);
     SDL_DestroyTexture(textTexture);
 }
+
+

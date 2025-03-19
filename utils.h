@@ -5,5 +5,7 @@
 
 int loadHighScore();
 void saveHighScore(int score);
+int loadLevel();
+void saveHighLevel(int level);
 
 #endif
