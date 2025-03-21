@@ -91,6 +91,7 @@ int main(int argc, char * argv[]) {
 
             }
 
+
             SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
             SDL_RenderClear(renderer);
 
@@ -103,31 +104,48 @@ int main(int argc, char * argv[]) {
             renderText(renderer, font, "Level: " + to_string(level), 20, 80);
             renderText(renderer, font, "High Level:" + to_string(highLevel), 20, 110);
 
+
              if (paused) {
                 renderText(renderer, font, "Paused", SCREEN_WIDTH / 2 - 30, SCREEN_HEIGHT / 2);
-                while(SDL_PollEvent(&event)){
+                SDL_RenderPresent(renderer);
+
+                /*while(SDL_PollEvent(&event)){
                     if(event.type == SDL_QUIT){
                         running = false;
                     }
-                    else if (event.type == SDL_KEYDOWN){
+                    //else
+                        if (event.type == SDL_KEYDOWN){
                         switch (event.key.keysym.sym){
                             case SDLK_SPACE:
                             paused = false;
                             break;
                         }
                     }
+                }*/
+                while(1)
+                {
+                    if(SDL_PollEvent(&event)){
+                    if(event.type == SDL_QUIT){
+                        running = false;
+                    }
+                    //else
+                        if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE){
+
+                            paused = false;
+                            break;
+                        }
+                    }
                 }
             }
+
             if (gameOver) {
                 if(increase_level(score) == true){
                     print_level_up(renderer, font);
                     score = 20 + (level-1) * 10;
-
-
                 }
                 else if(increase_level(score) == false){
                     print_lose(renderer, font);
-                    while(SDL_PollEvent(&event)){
+                    if(SDL_PollEvent(&event)){
                         if(event.type == SDL_QUIT){
                             running = false;
                         }
