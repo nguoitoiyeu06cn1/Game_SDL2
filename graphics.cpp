@@ -1,38 +1,43 @@
 #include "graphics.h"
 #include <iostream> // For error messages
+using namespace std;
+
 
 bool init(SDL_Window*& window, SDL_Renderer*& renderer, TTF_Font*& font) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
+        cerr << "SDL_Init Error: " << SDL_GetError() << endl;
         return false;
     }
     if (TTF_Init() == -1) {
-        std::cerr << "TTF_Init Error: " << TTF_GetError() << std::endl;
+        cerr << "TTF_Init Error: " << TTF_GetError() << endl;
         return false;
     }
     window = SDL_CreateWindow("Snake Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (!window) {
-        std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
+        cout << "SDL_CreateWindow Error: " << SDL_GetError() << endl;
         return false;
     }
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer) {
-        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
+        cout << "SDL_CreateRenderer Error: " << SDL_GetError() << endl;
         return false;
     }
     font = TTF_OpenFont("Arial.ttf", 24);
     if (!font) {
-        std::cerr << "TTF_OpenFont Error: " << TTF_GetError() << std::endl;
+        cout << "TTF_OpenFont Error: " << TTF_GetError() << endl;
         return false;
     }
     return true;
 }
 
-void close(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
+void close(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_Texture* texture) {
     TTF_CloseFont(font);
     SDL_DestroyRenderer(renderer);
+
     SDL_DestroyWindow(window);
+    SDL_DestroyTexture(texture);
     TTF_Quit();
+    IMG_Quit();
     SDL_Quit();
 }
 
@@ -46,7 +51,7 @@ void drawCircle(SDL_Renderer* renderer, int centerX, int centerY, int radius) {
     }
 }
 
-void renderText(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, int x, int y) {
+void renderText(SDL_Renderer* renderer, TTF_Font* font, const string& text, int x, int y) {
     SDL_Color textColor = {255, 255, 255, 255};
     SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), textColor);
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
@@ -56,4 +61,18 @@ void renderText(SDL_Renderer* renderer, TTF_Font* font, const std::string& text,
     SDL_DestroyTexture(textTexture);
 }
 
+SDL_Texture* LoadTexture(const string& filePath, SDL_Renderer* renderer){
+    SDL_Texture * texture = nullptr;
+    SDL_Surface *surface = IMG_Load(filePath.c_str());
+    if(surface == nullptr){
+        cout << "Error to load image " << filePath << IMG_GetError() << endl;
+    } else{
+        texture = SDL_CreateTextureFromSurface(renderer, surface);
+        if(texture == nullptr){
+            cout << "Error to create texture from " << filePath << SDL_GetError() << endl;
+        }
+        SDL_FreeSurface(surface);
+    }
+    return texture;
+}
 

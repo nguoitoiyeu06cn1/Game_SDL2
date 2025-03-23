@@ -1,21 +1,8 @@
 # depslib dependency file v1.0
-1742399511 source:d:\2024ky2\ltnc\game\main.cpp
-	<SDL.h>
-	<SDL_ttf.h>
-	<iostream>
-	<cstdlib>
-	<ctime>
-	<cmath>
-	<string>
-	"graphics.h"
-	"snake.h"
-	"food.h"
-	"utils.h"
-	"AIsnake.h"
-	"level.h"
-	"render.h"
+1742740238 source:d:\2024ky2\ltnc\game\main.cpp
+	"libra.h"
 
-1742214314 source:d:\2024ky2\ltnc\game\food.cpp
+1742543289 source:d:\2024ky2\ltnc\game\food.cpp
 	"food.h"
 	<cstdlib>
 	"graphics.h"
@@ -24,23 +11,24 @@
 	"SDL.h"
 	"graphics.h"
 
-1742392279 d:\2024ky2\ltnc\game\graphics.h
+1742734411 d:\2024ky2\ltnc\game\graphics.h
 	<SDL.h>
 	<SDL_ttf.h>
+	<SDL_image.h>
 	<string>
 
-1742393102 source:d:\2024ky2\ltnc\game\snake.cpp
+1742739479 source:d:\2024ky2\ltnc\game\snake.cpp
 	"snake.h"
 	"graphics.h"
 	<vector>
 	<cmath>
 
-1742388041 d:\2024ky2\ltnc\game\snake.h
+1742739349 d:\2024ky2\ltnc\game\snake.h
 	<vector>
 	"graphics.h"
-	"SDL.h"
+	<SDL.h>
 
-1742395468 source:d:\2024ky2\ltnc\game\utils.cpp
+1742739906 source:d:\2024ky2\ltnc\game\utils.cpp
 	"utils.h"
 	<iostream>
 	<fstream>
@@ -48,11 +36,11 @@
 1742394236 d:\2024ky2\ltnc\game\utils.h
 	<string>
 
-1742397014 source:d:\2024ky2\ltnc\game\graphics.cpp
+1742735852 source:d:\2024ky2\ltnc\game\graphics.cpp
 	"graphics.h"
 	<iostream>
 
-1742392317 source:d:\2024ky2\ltnc\game\aisnake.cpp
+1742740278 source:d:\2024ky2\ltnc\game\aisnake.cpp
 	"AIsnake.h"
 	<cstdlib>
 	<cmath>
@@ -68,18 +56,35 @@
 	<iostream>
 	"utils.h"
 
-1742398172 d:\2024ky2\ltnc\game\render.h
+1742734502 d:\2024ky2\ltnc\game\render.h
 	<SDL.h>
 	<SDL_ttf.h>
 	"graphics.h"
 	"utils.h"
 	"level.h"
 
-1742399949 source:d:\2024ky2\ltnc\game\level.cpp
+1742739934 source:d:\2024ky2\ltnc\game\level.cpp
 	"level.h"
 	<iostream>
 
-1742398810 source:d:\2024ky2\ltnc\game\render.cpp
+1742733563 source:d:\2024ky2\ltnc\game\render.cpp
 	"render.h"
 	<string>
+
+1742732719 d:\2024ky2\ltnc\game\libra.h
+	<SDL.h>
+	<SDL_ttf.h>
+	<SDL_image.h>
+	<iostream>
+	<cstdlib>
+	<ctime>
+	<cmath>
+	<string>
+	"graphics.h"
+	"snake.h"
+	"food.h"
+	"utils.h"
+	"AIsnake.h"
+	"level.h"
+	"render.h"
 

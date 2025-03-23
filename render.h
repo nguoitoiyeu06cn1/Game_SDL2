@@ -10,4 +10,5 @@
 void print_lose( SDL_Renderer*& renderer, TTF_Font*& font);
 void print_level_up( SDL_Renderer*& renderer, TTF_Font*& font);
 
+
 #endif // RENDER_H_INCLUDED

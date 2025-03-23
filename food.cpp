@@ -12,8 +12,15 @@ void Food::draw(SDL_Renderer* renderer) {
 }
 
 void Food::randomizePosition(int screenWidth, int screenHeight) {
-    x = rand() % (screenWidth - 2 * FOOD_RADIUS) + FOOD_RADIUS;
-    y = rand() % (screenHeight - 2 * FOOD_RADIUS) + FOOD_RADIUS;
+    while(true){
+
+        x = rand() % (screenWidth - 2 * FOOD_RADIUS) + FOOD_RADIUS;
+        y = rand() % (screenHeight - 2 * FOOD_RADIUS) + FOOD_RADIUS;
+        if(x > 200 && y > 120){
+            break;
+        }
+    }
+
 }
 
 int Food::getX() const {

@@ -3,11 +3,11 @@
 #include <fstream>
 
 using namespace std;
-const std::string HIGH_SCORE_FILE = "highscore.txt";
-const string HIGH_LEVEL_FILE = "level.txt";
+const string HIGH_SCORE_FILE = "text/highscore.txt";
+const string HIGH_LEVEL_FILE = "text/level.txt";
 
 int loadHighScore() {
-    std::ifstream file(HIGH_SCORE_FILE);
+    ifstream file(HIGH_SCORE_FILE);
     int highScore = 0;
     if (file.is_open()) {
         file >> highScore;

@@ -27,7 +27,7 @@ void Snake::update(double velX, double velY) {
 
 
 void Snake::draw(SDL_Renderer* renderer) {
-    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Snake color
+    SDL_SetRenderDrawColor(renderer, 139, 69, 19, 255); // Snake color
     for (const auto& segment : segments) {
         drawCircle(renderer, segment.x, segment.y, CIRCLE_RADIUS); // Use the drawCircle function from graphics.cpp
     }
@@ -38,7 +38,7 @@ void Snake::grow() {
     speedMultiplier *= 1.1;  // Adjust speed increase as needed.  Consider making this configurable.
 }
 
-/*bool Snake::checkCollisions( vector <SnakeSegment>& otherSnakeSegments)
+bool Snake::checkCollisions(const vector <SnakeSegment>& otherSnakeSegments)
 {
     SnakeSegment head = segments[0];
     for (const auto& segment : otherSnakeSegments) {
@@ -48,7 +48,7 @@ void Snake::grow() {
         }
     }
     return false;
-}*/
+}
 
 bool Snake::checkCollision(int foodX, int foodY, int foodRadius) {
     SnakeSegment head = segments[0];

@@ -36,11 +36,16 @@
 		<Unit filename="AIsnake.h" />
 		<Unit filename="food.cpp" />
 		<Unit filename="food.h" />
-		<Unit filename="graphics.cpp">
+		<Unit filename="graphics.cpp" />
+		<Unit filename="graphics.h" />
+		<Unit filename="level.cpp" />
+		<Unit filename="level.h" />
+		<Unit filename="libra.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="graphics.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="render.cpp" />
+		<Unit filename="render.h" />
 		<Unit filename="snake.cpp" />
 		<Unit filename="snake.h" />
 		<Unit filename="utils.cpp" />
