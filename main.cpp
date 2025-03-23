@@ -4,9 +4,11 @@
 int main(int argc, char * argv[]) {
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
+    SDL_Texture* texture = nullptr;
     TTF_Font* font = nullptr;
 
     if (!init(window, renderer, font)) return -1;
+    texture = LoadTexture("Paint/backGround.png", renderer);
 
     srand(time(0));
     bool running = true;
@@ -71,7 +73,7 @@ int main(int argc, char * argv[]) {
                 snake.update(velX, velY);
                 aiSnake.update(snake.getHead().x, snake.getHead().y);
 
-                if (snake.checkSelfCollision()) gameOver = true;
+                //if (snake.checkSelfCollision()) gameOver = true;
 
                 if (snake.checkCollision(food.getX(), food.getY(), 8)) {
                     snake.grow();
@@ -83,17 +85,17 @@ int main(int argc, char * argv[]) {
                     }
                 }
 
-                /*if(snake.checkCollision(aiSnake.getSegments()))
+                if(snake.checkCollisions(aiSnake.getSegments()))
                 {
                     gameOver = true;
-                }*/
-
-
+                }
             }
 
-
             SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
+
             SDL_RenderClear(renderer);
+
+            SDL_RenderCopy(renderer, texture, NULL, NULL);
 
             snake.draw(renderer);
             aiSnake.draw(renderer);
@@ -177,9 +179,10 @@ int main(int argc, char * argv[]) {
                     }
                 }
             }
+
             SDL_RenderPresent(renderer);
             SDL_Delay(8);
         }
-    close(window, renderer, font);
+    close(window, renderer, font, texture);
     return 0;
 }

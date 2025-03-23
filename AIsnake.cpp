@@ -4,9 +4,9 @@
 
 AIsnake :: AIsnake(int startX, int startY, int initialDirection) : currentDirection(initialDirection)
 {
-    segments = {{startX, startY},
-                {startX - 15, startY},
-                {startX - 30, startY}
+    segments = {{startX - 200, startY - 200},
+                {startX - 250, startY - 200},
+                {startX - 250, startY - 200}
     };
     switch (initialDirection)
     {
