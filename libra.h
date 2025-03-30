@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -16,6 +17,9 @@
 #include "AIsnake.h"
 #include "level.h"
 #include "render.h"
+#include "menu.h"
+using namespace std;
+
 
 
 #endif // LIBRA_H_INCLUDED

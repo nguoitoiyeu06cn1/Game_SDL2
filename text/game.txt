@@ -1,0 +1,868 @@
+#include "AIsnake.h"
+#include <cstdlib> // Need rand()
+#include <cmath> // Need some functions
+
+AIsnake :: AIsnake(int startX, int startY, int initialDirection) : currentDirection(initialDirection)
+{
+    segments = {{startX - 300, startY - 300},
+                {startX - 350, startY - 300},
+                {startX - 350, startY - 300}
+    };
+    switch (initialDirection)
+    {
+        case 0: velX = 0; velY = -4; break; //up
+        case 1: velX = 0; velY = 4; break; //down
+        case 2: velX = -4; velY = 0; break; //left
+        case 3: velX = 4; velY = 0; break; //right
+
+    }
+}
+void AIsnake::update(int playerSnakeX, int playerSnakeY)
+{
+    // random direction change
+    if(rand() % 100 < 5) // 5% chance to change direction
+    {
+        currentDirection = rand() % 4; // choose a new random direction
+        switch (currentDirection)
+        {
+            case 0: velX = 0; velY = -4; break; //up
+            case 1: velX = 0; velY = 4; break; //down
+            case 2: velX = -4; velY = 0; break; //left
+            case 3: velX = 4; velY = 0; break; //right
+        }
+    }
+
+    SnakeSegment newHead = {segments[0].x + (int)velX, segments[0].y + (int)velY};
+
+    // wrap around logic
+    if(newHead.y < 0) newHead.y = 600;
+    if(newHead.y > 600) newHead.y = 0;
+    if(newHead.x < 0) newHead.x = 800;
+    if(newHead.x > 800) newHead.x = 0;
+
+    segments.insert(segments.begin(), newHead);
+    segments.pop_back();
+
+}
+void AIsnake::draw(SDL_Renderer * renderer)
+{
+    SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);// AI snake yellow
+    for(const auto& segment: segments)
+    {
+        drawCircle(renderer, segment.x, segment.y, 10);
+    }
+}
+
+bool AIsnake::checkCollision(const Snake& playerSnake)
+{
+    SnakeSegment aiHead = segments[0];
+    vector <SnakeSegment> playerSegments = playerSnake.getSegments();
+    for(const auto& playerSegment : playerSegments)
+    {
+        double distance = hypot(aiHead.x - playerSegment.x, aiHead.y - playerSegment.y);
+        if(distance < 20) return true; // collision happened
+    }
+    return false;
+}
+
+bool AIsnake::checkSelfCollision()
+{
+    SnakeSegment head = segments[0];
+    for(size_t i = 1; i < segments.size(); ++i)
+    {
+        if(head.x == segments[i].x && head.y == segments[i].y)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+vector <SnakeSegment> AIsnake::getSegments() const
+{
+    return segments;
+}
+
+/////
+#ifndef AISNAKE_H_INCLUDED
+#define AISNAKE_H_INCLUDED
+
+#include <vector>
+#include "snake.h"
+#include "graphics.h"
+#include <SDL.h>
+#include <SDL_image.h>
+
+using namespace std;
+
+class AIsnake
+{
+public:
+    AIsnake(int startX, int startY, int initialDirection); // the same vector gradient
+    void update(int playerSnakeX, int playerSnakeY); // Information player position
+    void draw(SDL_Renderer * renderer);
+    bool checkCollision(const Snake& playerSnake); // Collision with PlayerSnake
+    bool checkSelfCollision();
+    vector <SnakeSegment> getSegments() const; // Need to check collision with obstancle
+private:
+    vector <SnakeSegment> segments;
+    double velX, velY;
+    int currentDirection; //0:up 1:down 2:left 3:right
+
+};
+#endif // AISNAKE_H_INCLUDED
+
+
+
+///
+
+#include "food.h"
+#include <cstdlib> // For rand()
+#include "graphics.h"
+
+Food::Food(int screenWidth, int screenHeight) {
+    randomizePosition(screenWidth, screenHeight);
+}
+
+void Food::draw(SDL_Renderer* renderer) {
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Food color
+    drawCircle(renderer, x, y, FOOD_RADIUS); // Use the drawCircle function from graphics.cpp
+}
+
+void Food::randomizePosition(int screenWidth, int screenHeight) {
+    while(true){
+
+        x = rand() % (screenWidth - 2 * FOOD_RADIUS) + FOOD_RADIUS;
+        y = rand() % (screenHeight - 2 * FOOD_RADIUS) + FOOD_RADIUS;
+        if(x > 200 && y > 120){
+            break;
+        }
+    }
+
+}
+
+int Food::getX() const {
+    return x;
+}
+
+int Food::getY() const {
+    return y;
+}
+///
+
+#ifndef FOOD_H
+#define FOOD_H
+
+#include "SDL.h" // Needed for SDL_Renderer
+#include "graphics.h" // For drawCircle
+
+const int FOOD_RADIUS = 8;
+
+class Food {
+public:
+    Food(int screenWidth, int screenHeight);
+    void draw(SDL_Renderer* renderer);
+    void randomizePosition(int screenWidth, int screenHeight);
+    int getX() const;
+    int getY() const;
+    int x, y;
+
+};
+
+#endif
+
+/////
+#include "graphics.h"
+#include <iostream> // For error messages
+using namespace std;
+
+
+bool init(SDL_Window*& window, SDL_Renderer*& renderer, TTF_Font*& font) {
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        cerr << "SDL_Init Error: " << SDL_GetError() << endl;
+        return false;
+    }
+    if (TTF_Init() == -1) {
+        cerr << "TTF_Init Error: " << TTF_GetError() << endl;
+        return false;
+    }
+    window = SDL_CreateWindow("Snake Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    if (!window) {
+        cout << "SDL_CreateWindow Error: " << SDL_GetError() << endl;
+        return false;
+    }
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (!renderer) {
+        cout << "SDL_CreateRenderer Error: " << SDL_GetError() << endl;
+        return false;
+    }
+    font = TTF_OpenFont("Arial.ttf", 24);
+    if (!font) {
+        cout << "TTF_OpenFont Error: " << TTF_GetError() << endl;
+        return false;
+    }
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        cout << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << endl;
+        return false;
+    }
+    return true;
+}
+
+void close(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_Texture* texture) {
+    TTF_CloseFont(font);
+    SDL_DestroyRenderer(renderer);
+
+    SDL_DestroyWindow(window);
+    SDL_DestroyTexture(texture);
+    TTF_Quit();
+    IMG_Quit();
+    Mix_CloseAudio();
+    SDL_Quit();
+}
+
+void drawCircle(SDL_Renderer* renderer, int centerX, int centerY, int radius) {
+    for (int w = -radius; w <= radius; w++) {
+        for (int h = -radius; h <= radius; h++) {
+            if (w * w + h * h <= radius * radius) {
+                SDL_RenderDrawPoint(renderer, centerX + w, centerY + h);
+            }
+        }
+    }
+}
+
+void renderText(SDL_Renderer* renderer, TTF_Font* font, const string& text, int x, int y) {
+    SDL_Color textColor = {255, 255, 255, 255};
+    SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), textColor);
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+    SDL_Rect renderQuad = {x, y, textSurface->w, textSurface->h};
+    SDL_RenderCopy(renderer, textTexture, NULL, &renderQuad);
+    SDL_FreeSurface(textSurface);
+    SDL_DestroyTexture(textTexture);
+}
+
+SDL_Texture* LoadTexture(const string& filePath, SDL_Renderer* renderer){
+    SDL_Texture * texture = nullptr;
+    SDL_Surface *surface = IMG_Load(filePath.c_str());
+    if(surface == nullptr){
+        cout << "Error to load image " << filePath << IMG_GetError() << endl;
+    } else{
+        texture = SDL_CreateTextureFromSurface(renderer, surface);
+        if(texture == nullptr){
+            cout << "Error to create texture from " << filePath << SDL_GetError() << endl;
+        }
+        SDL_FreeSurface(surface);
+    }
+    return texture;
+}
+
+/////
+#ifndef GRAPHICS_H
+#define GRAPHICS_H
+
+#include <SDL.h>
+#include <SDL_ttf.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
+#include <string>
+using namespace std;
+
+
+// Constants (consider putting these in a config file if you want them easily changeable)
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
+
+
+bool init(SDL_Window*& window, SDL_Renderer*& renderer, TTF_Font*& font);
+void close(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_Texture* texture);
+void drawCircle(SDL_Renderer* renderer, int centerX, int centerY, int radius);
+void renderText(SDL_Renderer* renderer, TTF_Font* font, const string& text, int x, int y);
+SDL_Texture* LoadTexture(const string& filePath, SDL_Renderer* renderer);
+
+
+#endif
+/////
+#include "level.h"
+#include <iostream>
+using namespace std;
+
+vector <AIsnake> aiSnakes;
+//aiSnake.update(snake.getHead().x, snake.getHead().y);
+//aiSnakes.push_back(aiSnake);
+int count_score = 0;
+int score;
+int level = 1;
+int count_level = 0;
+bool hasLeveledUp = false;
+bool increase_level(int score){
+    int condition = 20 + level * 10;
+    // cout << "condition: " << condition << " score: " << score << endl;
+    // cout << score - condition << endl;
+    if((score - condition) >= 0)
+    {
+       // level += 1;
+        count_level = level + 1;
+        hasLeveledUp = true;
+        //cout << 1 << endl;
+        return true;
+    }
+    else return false;
+}
+void createAIsnakes(int numAIsnake, int SCREEN_WIDTH, int SCREEN_HEIGHT){
+    for(int i = 0; i < numAIsnake; i++){
+        int startX = rand() % SCREEN_WIDTH;
+        int startY = rand() % SCREEN_HEIGHT;
+        int initialDirection = rand() % 4;
+
+        AIsnake newAisnake(startX, startY, initialDirection);
+
+        aiSnakes.push_back(newAisnake);
+    }
+}
+//////
+#ifndef LEVEL_H_INCLUDED
+#define LEVEL_H_INCLUDED
+
+#include <iostream>
+#include "utils.h"
+#include "AIsnake.h"
+
+extern vector <AIsnake> aiSnakes;
+extern int count_score;
+extern int score;
+extern int level;
+extern bool hasLeveledUp;
+extern int count_level;
+bool increase_level(int score_prerent);
+
+void createAIsnakes(int numAIsnake, int SCREEN_WIDTH, int SCREEN_HEIGHT);
+
+
+
+
+#endif // LEVEL_H_INCLUDED
+/////
+#ifndef LIBRA_H_INCLUDED
+#define LIBRA_H_INCLUDED
+
+#include <SDL.h>
+#include <SDL_ttf.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <cmath>
+#include <string>
+#include "graphics.h"
+#include "snake.h"
+#include "food.h"
+#include "utils.h"
+#include "AIsnake.h"
+#include "level.h"
+#include "render.h"
+using namespace std;
+
+
+
+#endif // LIBRA_H_INCLUDED
+
+/////
+#include "libra.h"
+#include <vector> // Thêm include cho vector
+
+// Biến global (nên tránh, nhưng hữu ích trong trường hợp này)
+bool hasLeveledUp = false;
+
+int main(int argc, char * argv[]) {
+    SDL_Window* window = nullptr;
+    SDL_Renderer* renderer = nullptr;
+    SDL_Texture* texture = nullptr;
+    TTF_Font* font = nullptr;
+
+    if (!init(window, renderer, font)) return -1;
+    texture = LoadTexture("Paint/backGround.png", renderer);
+
+    Mix_Chunk* eatSound = Mix_LoadWAV("sound/eat_food.mp3");
+    if (eatSound == nullptr) {
+        cout << "Failed to load sound effect! SDL_mixer Error: " << Mix_GetError() << endl;
+    }
+
+    Mix_Music* bgMusic = Mix_LoadMUS("sound/ontiva_E2NG2X2.mp3");
+    Mix_Music* endMusic = Mix_LoadMUS("sound/ha_ha_ha-1.mp3");
+    if (bgMusic == nullptr) {
+        cout << "Failed to load background music! SDL_mixer Error: " << Mix_GetError() << endl;
+    }
+    if (endMusic == nullptr) {
+        cout << "Failed to load endMusic music! SDL_mixer Error: " << Mix_GetError() << endl;
+    }
+    Mix_PlayMusic(bgMusic, -1);
+
+    srand(time(0));
+    bool running = true;
+    SDL_Event event;
+    bool useMouseControl = false;
+
+    Snake snake(SCREEN_WIDTH, SCREEN_HEIGHT);
+    Food food(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    // Vector để lưu trữ AI Snakes
+    std::vector<AIsnake> aiSnakes;
+
+    // Tạo rắn AI ban đầu (ví dụ, 1 rắn)
+    createAIsnakes(1, SCREEN_WIDTH, SCREEN_HEIGHT, aiSnakes); // Tạo rắn AI ban đầu
+
+    double velX = 4, velY = 0;
+    int score = 29;
+    bool gameOver = false;
+    bool paused = false;
+    int highScore = loadHighScore();
+    int highLevel = loadLevel();
+
+    while (running) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                running = false;
+            } else if (event.type == SDL_KEYDOWN && !gameOver) {
+                switch (event.key.keysym.sym) {
+                    case SDLK_UP:    velX = 0; velY = -4 ; useMouseControl = false; break;
+                    case SDLK_DOWN:  velX = 0; velY = 4; useMouseControl = false; break;
+                    case SDLK_LEFT:  velX = -4; velY = 0; useMouseControl = false; break;
+                    case SDLK_RIGHT: velX = 4; velY = 0; useMouseControl = false; break;
+                    case SDLK_SPACE:
+                        paused = true; break;
+                    case SDLK_r:
+                        // Reset game
+                        aiSnakes.clear();
+                        createAIsnakes(1, SCREEN_WIDTH, SCREEN_HEIGHT, aiSnakes);
+                        gameOver = false;
+                        score = 0;
+                        count_score = 0;
+                        level = 0;
+                        count_level = 0;
+                        snake = Snake(SCREEN_WIDTH, SCREEN_HEIGHT);
+                        food.randomizePosition(SCREEN_WIDTH, SCREEN_HEIGHT);
+                        velX = 4;
+                        velY = 0;
+                        useMouseControl = false;
+                        paused = false;
+                        hasLeveledUp = false;
+                        break;
+                }
+            } else if (event.type == SDL_MOUSEMOTION && !gameOver && !paused) {
+                useMouseControl = true;
+                int mouseX = event.motion.x;
+                int mouseY = event.motion.y;
+                SnakeSegment head = snake.getHead();
+                double diffX = mouseX - head.x;
+                double diffY = mouseY - head.y;
+                double length = sqrt(diffX * diffX + diffY * diffY);
+                if (length > 0) {
+                    velX = (diffX / length) * 4;
+                    velY = (diffY / length) * 4;
+                }
+            }
+        }
+
+        if (!gameOver && !paused ) {
+            snake.update(velX, velY);
+
+            // Cập nhật và kiểm tra va chạm cho mỗi rắn AI
+            for (auto it = aiSnakes.begin(); it != aiSnakes.end(); ) {
+                it->update(snake.getHead().x, snake.getHead().y);
+                if (snake.checkCollisions(it->getSegments())) {
+                    gameOver = true;
+                    break; // Thoát khỏi vòng lặp
+                }
+                ++it;
+            }
+            if(gameOver) continue;
+
+            if (snake.checkCollision(food.getX(), food.getY(), 8)) {
+                Mix_PlayChannel(-1, eatSound, 0);
+                snake.grow();
+                food.randomizePosition(SCREEN_WIDTH, SCREEN_HEIGHT);
+                score++;
+                count_score++;
+                if (count_score >= 10) {
+                    count_score -= 10;
+                }
+            }
+        }
+
+        SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
+        SDL_RenderClear(renderer);
+        SDL_RenderCopy(renderer, texture, NULL, NULL);
+
+        snake.draw(renderer);
+
+        // Vẽ tất cả các rắn AI
+        for (const auto& aiSnake : aiSnakes) {
+            aiSnake.draw(renderer);
+        }
+
+        food.draw(renderer);
+
+        renderText(renderer, font, "Score: " + to_string(score), 20, 20);
+        renderText(renderer, font, "High Score: " + to_string(highScore), 20, 50);
+        renderText(renderer, font, "Level: " + to_string(level), 20, 80);
+        renderText(renderer, font, "High Level:" + to_string(highLevel), 20, 110);
+
+        if (paused) {
+            renderText(renderer, font, "Paused", SCREEN_WIDTH / 2 - 30, SCREEN_HEIGHT / 2);
+            SDL_RenderPresent(renderer);
+
+            SDL_Event pauseEvent; // Sử dụng biến khác
+            bool unpaused = false;
+            while (!unpaused) {
+                while (SDL_PollEvent(&pauseEvent)) {
+                    if (pauseEvent.type == SDL_QUIT) {
+                        running = false;
+                        unpaused = true;
+                    } else if (pauseEvent.type == SDL_KEYDOWN) {
+                        switch (pauseEvent.key.keysym.sym) {
+                            case SDLK_SPACE:
+                                paused = false;
+                                unpaused = true;
+                                break;
+                        }
+                    }
+                }
+                SDL_Delay(10);
+            }
+        }
+bool level_up = increase_level(score);
+        if (gameOver) {
+    Mix_HaltMusic();
+    Mix_PlayMusic(endMusic, 0);
+
+    if (level_up) {
+        print_level_up(renderer, font);
+        SDL_RenderPresent(renderer);
+
+        SDL_Event levelUpEvent;
+        bool waiting = true;
+        while (waiting) {
+            while (SDL_PollEvent(&levelUpEvent)) {
+                if (levelUpEvent.type == SDL_QUIT) {
+                    running = false;
+                    waiting = false;
+                    break;
+                } else if (levelUpEvent.type == SDL_KEYDOWN) {
+                    waiting = false;
+                    break;
+                }
+            }
+            SDL_Delay(10);
+        }
+
+        // Reset các biến và tạo thêm AI Snakes
+        score = 20 + level * 10;
+        level++;
+        aiSnakes.clear();
+        createAIsnakes(level, SCREEN_WIDTH, SCREEN_HEIGHT, aiSnakes); // Tạo AI Snakes dựa trên level
+        Mix_PlayMusic(bgMusic, -1);
+    } else {
+        print_lose(renderer, font);
+        SDL_RenderPresent(renderer);
+
+        SDL_Event gameOverEvent;
+        bool waiting = true;
+        while (waiting) {
+            while (SDL_PollEvent(&gameOverEvent)) {
+                if (gameOverEvent.type == SDL_QUIT) {
+                    running = false;
+                    waiting = false;
+                    break;
+                } else if (gameOverEvent.type == SDL_KEYDOWN) {
+                    switch (gameOverEvent.key.keysym.sym) {
+                        case SDLK_y:
+                            // Restart game
+                            gameOver = false;
+                            score = 0;
+                            level = 0;
+                            hasLeveledUp = false;
+                            aiSnakes.clear();
+                            createAIsnakes(1, SCREEN_WIDTH, SCREEN_HEIGHT, aiSnakes);
+                            snake = Snake(SCREEN_WIDTH, SCREEN_HEIGHT);
+                            food.randomizePosition(SCREEN_WIDTH, SCREEN_HEIGHT);
+                            velX = 4;
+                            velY = 0;
+                            useMouseControl = false;
+                            Mix_PlayMusic(bgMusic, -1);
+                            waiting = false;
+                            break;
+                        case SDLK_n:
+                            running = false;
+                            waiting = false;
+                            break;
+                    }
+                }
+            }
+            SDL_Delay(10);
+        }
+    }
+}
+
+        SDL_RenderPresent(renderer);
+        SDL_Delay(8);
+    }
+    close(window, renderer, font, texture);
+    return 0;
+}
+
+// Hàm tạo rắn AI
+void createAIsnakes(int numSnakes, int screenWidth, int screenHeight, std::vector<AIsnake>& aiSnakes) {
+    for (int i = 0; i < numSnakes; ++i) {
+        aiSnakes.emplace_back(rand() % screenWidth, rand() % screenHeight, rand() % 4);
+    }
+}
+
+bool increase_level(int score) {
+    static bool hasLeveledUp = false;
+    if (score >= 20 + level * 10 && !hasLeveledUp) {
+        hasLeveledUp = true;
+        return true;
+    }
+    return false;
+}
+
+void close(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_Texture* texture) {
+    SDL_DestroyTexture(texture); // Giải phóng texture
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    TTF_CloseFont(font);
+    TTF_Quit();
+    IMG_Quit(); //Thêm IMG_Quit() để giải phóng thư viện SDL_image
+    SDL_Quit();
+}
+//////
+#include "render.h"
+#include <string>
+
+using namespace std;
+
+/*if(IMG_Init(IMG_INIT_PNG) == 0){
+    cout << "ERROR" << IMG_GetError() << endl;
+}*/
+
+void print_lose( SDL_Renderer*& renderer, TTF_Font*& font){
+    renderText(renderer, font, "Game Over!", SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT / 2);
+    renderText(renderer, font, "Do you want to play again?", SCREEN_WIDTH / 2 - 110, SCREEN_HEIGHT / 2 + 30);
+    renderText(renderer, font, "Choose Y: yes, N: no", SCREEN_WIDTH / 2 - 90, SCREEN_HEIGHT / 2 + 60);
+    saveHighScore(score);  //Save high score when game is over
+    saveHighLevel(level); // Save high level when game is over
+}
+void print_level_up(SDL_Renderer*& renderer, TTF_Font*& font)
+{
+    renderText(renderer, font, "Game Over!", SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT / 2);
+    renderText(renderer, font, "Your score is eligible to move up to a new level. ", SCREEN_WIDTH / 2 - 150, SCREEN_HEIGHT / 2 + 30);
+    renderText(renderer, font, "Do you want to play next level?", SCREEN_WIDTH / 2 - 120, SCREEN_HEIGHT / 2 + 60);
+    saveHighScore(score);  //Save high score when game is over
+    saveHighLevel(level); // Save high level when game is over
+}
+
+//////
+#ifndef RENDER_H_INCLUDED
+#define RENDER_H_INCLUDED
+
+#include <SDL.h>
+#include <SDL_ttf.h>
+#include "graphics.h"
+#include "utils.h"
+#include "level.h"
+
+void print_lose( SDL_Renderer*& renderer, TTF_Font*& font);
+void print_level_up( SDL_Renderer*& renderer, TTF_Font*& font);
+
+
+#endif // RENDER_H_INCLUDED
+
+//////
+#include "snake.h"
+#include "graphics.h"
+#include <vector>
+
+#include <cmath> // For sqrt (if using mouse control within the Snake class)
+
+Snake::Snake(int startX, int startY) : speedMultiplier(1.0) {
+    segments = {
+        {startX / 2, startY / 2},
+        {startX / 2 - 300, startY / 2 -300},
+        {startX / 2 - 330, startY / 2 -300}
+    };
+}
+
+void Snake::update(double velX, double velY) {
+    SnakeSegment newHead = {segments[0].x + (int)velX, segments[0].y + (int)velY};
+
+    // Wrap around logic (consider moving SCREEN_WIDTH/HEIGHT to a global config file/header)
+    if (newHead.y < 0) newHead.y = 600;
+    if (newHead.y > 600) newHead.y = 0;
+    if (newHead.x < 0) newHead.x = 800;
+    if (newHead.x > 800) newHead.x = 0;
+
+    segments.insert(segments.begin(), newHead);
+    segments.pop_back();
+}
+
+
+void Snake::draw(SDL_Renderer* renderer) {
+    SDL_SetRenderDrawColor(renderer, 139, 69, 19, 255); // Snake color
+    for (const auto& segment : segments) {
+        drawCircle(renderer, segment.x, segment.y, CIRCLE_RADIUS); // Use the drawCircle function from graphics.cpp
+    }
+}
+
+void Snake::grow() {
+    segments.push_back(segments.back());
+    speedMultiplier *= 1.1;  // Adjust speed increase as needed.  Consider making this configurable.
+}
+
+bool Snake::checkCollisions(const vector <SnakeSegment>& otherSnakeSegments)
+{
+    SnakeSegment head = segments[0];
+    for (const auto& segment : otherSnakeSegments) {
+        double distance = hypot(head.x - segment.x, head.y - segment.y);
+        if (distance < 20) { // Điều chỉnh khoảng cách va chạm nếu cần
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Snake::checkCollision(int foodX, int foodY, int foodRadius) {
+    SnakeSegment head = segments[0];
+    return (abs(head.x - foodX) < foodRadius * 2 && abs(head.y - foodY) < foodRadius * 2);
+}
+
+bool Snake::checkSelfCollision() {
+    SnakeSegment head = segments[0];
+    for (size_t i = 1; i < segments.size(); ++i) {
+        if (head.x == segments[i].x && head.y == segments[i].y) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Snake::reset(int startX, int startY) {
+    segments.clear();
+    segments = {
+        {startX / 2, startY / 2},
+        {startX / 2 - 300, startY / 2 -300},
+        {startX / 2 - 330, startY / 2 -300}
+    };
+    speedMultiplier = 1.0;
+}
+
+SnakeSegment Snake::getHead() const {
+  return segments[0];
+}
+
+std::vector<SnakeSegment> Snake::getSegments() const {
+  return segments;
+}
+/////
+#ifndef SNAKE_H
+#define SNAKE_H
+
+#include <vector>
+#include "graphics.h" // For drawCircle, and potentially SCREEN_WIDTH/HEIGHT if not global
+#include <SDL.h> // Needed for SDL_Renderer
+using namespace std;
+
+const int CIRCLE_RADIUS = 10;
+const int BASE_SPEED = 4;
+
+struct SnakeSegment {
+    int x, y;
+};
+
+class Snake {
+public:
+    Snake(int startX, int startY);
+    void update(double velX, double velY);
+    void draw(SDL_Renderer* renderer);
+    void grow();
+    bool checkCollisions(const vector<SnakeSegment>& otherSnakeSegments);
+    bool checkCollision(int foodX, int foodY, int foodRadius);
+    bool checkSelfCollision();
+    void reset(int startX, int startY);
+    SnakeSegment getHead() const;
+    vector<SnakeSegment> getSegments() const;
+
+private:
+    vector<SnakeSegment> segments;
+    double speedMultiplier = 1.0;
+
+};
+
+#endif
+/////
+#include "utils.h"
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+const string HIGH_SCORE_FILE = "text/highscore.txt";
+const string HIGH_LEVEL_FILE = "text/level.txt";
+
+int loadHighScore() {
+    ifstream file(HIGH_SCORE_FILE);
+    int highScore = 0;
+    if (file.is_open()) {
+        file >> highScore;
+        file.close();
+    } else {
+        std::cerr << "Error opening high score file for reading." << std::endl;
+    }
+    return highScore;
+}
+
+void saveHighScore(int score) {
+    int highScore = loadHighScore();
+    if (score > highScore) {
+        std::ofstream file(HIGH_SCORE_FILE);
+        if (file.is_open()) {
+            file << score;
+            file.close();
+        } else {
+            std::cerr << "Error opening high score file for writing." << std::endl;
+        }
+    }
+}
+int loadLevel(){
+    ifstream file(HIGH_LEVEL_FILE);
+    int highLevel = 0;
+    if(file.is_open()){
+        file >> highLevel;
+        file.close();
+    } else {
+        cout << "Error opening high level file for reading" << endl;
+    }
+    return highLevel;
+}
+void saveHighLevel(int level){
+    int highLevel = loadLevel();
+    if(level > highLevel){
+        ofstream file(HIGH_LEVEL_FILE);
+        if(file.is_open()){
+            file << level;
+            file.close();
+        }
+        else {
+            cout << "Error opening high level file for writing" << endl;
+        }
+    }
+}
+/////#ifndef UTILS_H
+#define UTILS_H
+
+#include <string>
+
+int loadHighScore();
+void saveHighScore(int score);
+int loadLevel();
+void saveHighLevel(int level);
+
+#endif

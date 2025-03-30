@@ -4,9 +4,9 @@
 
 AIsnake :: AIsnake(int startX, int startY, int initialDirection) : currentDirection(initialDirection)
 {
-    segments = {{startX - 200, startY - 200},
-                {startX - 250, startY - 200},
-                {startX - 250, startY - 200}
+    segments = {{startX - 300, startY - 300},
+                {startX - 350, startY - 300},
+                {startX - 350, startY - 300}
     };
     switch (initialDirection)
     {
@@ -35,10 +35,10 @@ void AIsnake::update(int playerSnakeX, int playerSnakeY)
     SnakeSegment newHead = {segments[0].x + (int)velX, segments[0].y + (int)velY};
 
     // wrap around logic
-    if(newHead.y < 0) newHead.y = 600;
-    if(newHead.y > 600) newHead.y = 0;
-    if(newHead.x < 0) newHead.x = 800;
-    if(newHead.x > 800) newHead.x = 0;
+     if (newHead.y < 0) newHead.y = SCREEN_HEIGHT; // Sử dụng SCREEN_HEIGHT
+    if (newHead.y > SCREEN_HEIGHT) newHead.y = 0;
+    if (newHead.x < 0) newHead.x = SCREEN_WIDTH; // Sử dụng SCREEN_WIDTH
+    if (newHead.x > SCREEN_WIDTH) newHead.x = 0;
 
     segments.insert(segments.begin(), newHead);
     segments.pop_back();

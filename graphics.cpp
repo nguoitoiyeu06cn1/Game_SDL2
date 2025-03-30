@@ -27,6 +27,10 @@ bool init(SDL_Window*& window, SDL_Renderer*& renderer, TTF_Font*& font) {
         cout << "TTF_OpenFont Error: " << TTF_GetError() << endl;
         return false;
     }
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+        cout << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << endl;
+        return false;
+    }
     return true;
 }
 
@@ -38,6 +42,7 @@ void close(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_Textu
     SDL_DestroyTexture(texture);
     TTF_Quit();
     IMG_Quit();
+    Mix_CloseAudio();
     SDL_Quit();
 }
 

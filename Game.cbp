@@ -44,6 +44,8 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="main.cpp" />
+		<Unit filename="menu.cpp" />
+		<Unit filename="menu.h" />
 		<Unit filename="render.cpp" />
 		<Unit filename="render.h" />
 		<Unit filename="snake.cpp" />

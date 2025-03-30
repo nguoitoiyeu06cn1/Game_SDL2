@@ -1,23 +1,24 @@
 # depslib dependency file v1.0
-1742740238 source:d:\2024ky2\ltnc\game\main.cpp
+1743326200 source:d:\2024ky2\ltnc\game\main.cpp
 	"libra.h"
 
-1742543289 source:d:\2024ky2\ltnc\game\food.cpp
+1743326205 source:d:\2024ky2\ltnc\game\food.cpp
 	"food.h"
 	<cstdlib>
 	"graphics.h"
 
-1742270035 d:\2024ky2\ltnc\game\food.h
+1743326205 d:\2024ky2\ltnc\game\food.h
 	"SDL.h"
 	"graphics.h"
 
-1742734411 d:\2024ky2\ltnc\game\graphics.h
+1743326206 d:\2024ky2\ltnc\game\graphics.h
 	<SDL.h>
 	<SDL_ttf.h>
 	<SDL_image.h>
+	<SDL_mixer.h>
 	<string>
 
-1742739479 source:d:\2024ky2\ltnc\game\snake.cpp
+1743326205 source:d:\2024ky2\ltnc\game\snake.cpp
 	"snake.h"
 	"graphics.h"
 	<vector>
@@ -28,53 +29,57 @@
 	"graphics.h"
 	<SDL.h>
 
-1742739906 source:d:\2024ky2\ltnc\game\utils.cpp
+1743326206 source:d:\2024ky2\ltnc\game\utils.cpp
 	"utils.h"
 	<iostream>
 	<fstream>
 
-1742394236 d:\2024ky2\ltnc\game\utils.h
+1743326205 d:\2024ky2\ltnc\game\utils.h
 	<string>
 
-1742735852 source:d:\2024ky2\ltnc\game\graphics.cpp
+1743326205 source:d:\2024ky2\ltnc\game\graphics.cpp
 	"graphics.h"
 	<iostream>
 
-1742740278 source:d:\2024ky2\ltnc\game\aisnake.cpp
+1743326205 source:d:\2024ky2\ltnc\game\aisnake.cpp
 	"AIsnake.h"
 	<cstdlib>
 	<cmath>
 
-1742269307 d:\2024ky2\ltnc\game\aisnake.h
+1743326205 d:\2024ky2\ltnc\game\aisnake.h
 	<vector>
 	"snake.h"
 	"graphics.h"
 	<SDL.h>
 	<SDL_image.h>
 
-1742398383 d:\2024ky2\ltnc\game\level.h
+1743314948 d:\2024ky2\ltnc\game\level.h
 	<iostream>
 	"utils.h"
+	"AIsnake.h"
+	"graphics.h"
 
-1742734502 d:\2024ky2\ltnc\game\render.h
+1743326205 d:\2024ky2\ltnc\game\render.h
 	<SDL.h>
 	<SDL_ttf.h>
 	"graphics.h"
 	"utils.h"
 	"level.h"
 
-1742739934 source:d:\2024ky2\ltnc\game\level.cpp
+1743326206 source:d:\2024ky2\ltnc\game\level.cpp
 	"level.h"
+	"menu.h"
 	<iostream>
 
-1742733563 source:d:\2024ky2\ltnc\game\render.cpp
+1743326206 source:d:\2024ky2\ltnc\game\render.cpp
 	"render.h"
 	<string>
 
-1742732719 d:\2024ky2\ltnc\game\libra.h
+1743326206 d:\2024ky2\ltnc\game\libra.h
 	<SDL.h>
 	<SDL_ttf.h>
 	<SDL_image.h>
+	<SDL_mixer.h>
 	<iostream>
 	<cstdlib>
 	<ctime>
@@ -87,4 +92,17 @@
 	"AIsnake.h"
 	"level.h"
 	"render.h"
+	"menu.h"
+
+1743326903 d:\2024ky2\ltnc\game\menu.h
+	<SDL.h>
+	<SDL_ttf.h>
+
+1743320934 source:d:\2024ky2\ltnc\game\menu.cpp
+	"menu.h"
+	"libra.h"
+	<iostream>
+	<vector>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
 
