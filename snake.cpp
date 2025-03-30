@@ -7,8 +7,8 @@
 Snake::Snake(int startX, int startY) : speedMultiplier(1.0) {
     segments = {
         {startX / 2, startY / 2},
-        {startX / 2 - 15, startY / 2},
-        {startX / 2 - 30, startY / 2}
+        {startX / 2 - 300, startY / 2 -300},
+        {startX / 2 - 330, startY / 2 -300}
     };
 }
 
@@ -69,8 +69,8 @@ void Snake::reset(int startX, int startY) {
     segments.clear();
     segments = {
         {startX / 2, startY / 2},
-        {startX / 2 - 15, startY / 2},
-        {startX / 2 - 30, startY / 2}
+        {startX / 2 - 300, startY / 2 -300},
+        {startX / 2 - 330, startY / 2 -300}
     };
     speedMultiplier = 1.0;
 }
