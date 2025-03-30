@@ -10,7 +10,7 @@ extern vector <AIsnake> aiSnakes;
 extern int count_score;
 extern int score;
 extern int level;
-extern bool hasLeveledUp;
+extern bool hasLeveledUp;// kiem tra len cap dung voi cap do
 extern int count_level;
 bool increase_level(int score_prerent);
 

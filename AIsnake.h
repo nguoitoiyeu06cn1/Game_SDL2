@@ -12,11 +12,11 @@ using namespace std;
 class AIsnake
 {
 public:
-    AIsnake(int startX, int startY, int initialDirection); // the same vector gradient
-    void update(int playerSnakeX, int playerSnakeY); // Information player position
+    AIsnake(int startX, int startY, int initialDirection); // huong di chuyen cho ai snake
+    void update(int playerSnakeX, int playerSnakeY); // cap nhat vi tri cho ran chu the
     void draw(SDL_Renderer * renderer);
-    bool checkCollision(const Snake& playerSnake); // Collision with PlayerSnake
-    bool checkSelfCollision();
+    bool checkCollision(const Snake& playerSnake); //
+    bool checkSelfCollision(); // kiem tra va cham voi ban than
     vector <SnakeSegment> getSegments() const; // Need to check collision with obstancle
 private:
     vector <SnakeSegment> segments;

@@ -2,7 +2,7 @@
 #include "graphics.h"
 #include <vector>
 
-#include <cmath> // For sqrt (if using mouse control within the Snake class)
+#include <cmath> //
 
 Snake::Snake(int startX, int startY) : speedMultiplier(1.0) {
     segments = {
@@ -15,7 +15,7 @@ Snake::Snake(int startX, int startY) : speedMultiplier(1.0) {
 void Snake::update(double velX, double velY) {
     SnakeSegment newHead = {segments[0].x + (int)velX, segments[0].y + (int)velY};
 
-    // Wrap around logic (consider moving SCREEN_WIDTH/HEIGHT to a global config file/header)
+    // Di chuyen cua ran het man hinh se di nguoc lai
     if (newHead.y < 0) newHead.y = 600;
     if (newHead.y > 600) newHead.y = 0;
     if (newHead.x < 0) newHead.x = 800;
@@ -27,15 +27,15 @@ void Snake::update(double velX, double velY) {
 
 
 void Snake::draw(SDL_Renderer* renderer) {
-    SDL_SetRenderDrawColor(renderer, 139, 69, 19, 255); // Snake color
+    SDL_SetRenderDrawColor(renderer, 139, 69, 19, 255); // xet mau cho ran, mau nau
     for (const auto& segment : segments) {
-        drawCircle(renderer, segment.x, segment.y, CIRCLE_RADIUS); // Use the drawCircle function from graphics.cpp
+        drawCircle(renderer, segment.x, segment.y, CIRCLE_RADIUS); // dung ham render tu thu graphics.cpp de ve tat ca vat the thanh hinh tron
     }
 }
 
 void Snake::grow() {
     segments.push_back(segments.back());
-    speedMultiplier *= 1.1;  // Adjust speed increase as needed.  Consider making this configurable.
+    speedMultiplier *= 1.1;  // Dieu chinh toc do neu can
 }
 
 bool Snake::checkCollisions(const vector <SnakeSegment>& otherSnakeSegments)

@@ -1,5 +1,5 @@
 #include "food.h"
-#include <cstdlib> // For rand()
+#include <cstdlib> //
 #include "graphics.h"
 
 Food::Food(int screenWidth, int screenHeight) {
@@ -7,8 +7,8 @@ Food::Food(int screenWidth, int screenHeight) {
 }
 
 void Food::draw(SDL_Renderer* renderer) {
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Food color
-    drawCircle(renderer, x, y, FOOD_RADIUS); // Use the drawCircle function from graphics.cpp
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // xet mau cho thuc an: mau do
+    drawCircle(renderer, x, y, FOOD_RADIUS); //
 }
 void Food::randomizePosition(int screenWidth, int screenHeight) {
     int maxAttempts = 1000; // giới hạn số lần thử

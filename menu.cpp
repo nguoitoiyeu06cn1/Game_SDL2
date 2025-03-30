@@ -5,7 +5,7 @@
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
 
-TTF_Font* menuFont = nullptr; // Font cho menu
+TTF_Font* menuFont = nullptr;
 
 
 int showLevelSelectionMenu(SDL_Renderer* renderer, TTF_Font* font) {

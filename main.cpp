@@ -1,7 +1,5 @@
 #include "libra.h"
 
-// Hàm hiển thị menu chọn cấp độ
-
 
 int main(int argc, char * argv[]) {
     SDL_Window* window = nullptr;
@@ -159,7 +157,7 @@ int main(int argc, char * argv[]) {
                             paused = false; Mix_PlayMusic(bgMusic, -1); break;
                         case SDLK_l:
                             if(increase_level(score) == true){
-                                aiSnakes.clear(); // Remove all existing AI snakes
+                                aiSnakes.clear(); // clear het cac ran ai cu
                                 createAIsnakes(level + 1, SCREEN_WIDTH, SCREEN_HEIGHT); //
                                 Mix_PlayMusic(bgMusic, -1);
                                 gameOver = false;
@@ -189,8 +187,8 @@ int main(int argc, char * argv[]) {
                 Mix_PlayChannel(-1, endMusic, 0);
                 print_level_up(renderer, font);
                 SDL_RenderPresent(renderer);
-                aiSnakes.clear(); // Remove all existing AI snakes
-                createAIsnakes(level + 1, SCREEN_WIDTH, SCREEN_HEIGHT); // Create new AI snak
+                aiSnakes.clear(); //
+                createAIsnakes(level + 1, SCREEN_WIDTH, SCREEN_HEIGHT); // tao ran ai moi
 
                 SDL_Event event;
                 bool waiting = true;

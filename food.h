@@ -9,8 +9,8 @@ const int FOOD_RADIUS = 8;
 class Food {
 public:
     Food(int screenWidth, int screenHeight);
-    void draw(SDL_Renderer* renderer);
-    void randomizePosition(int screenWidth, int screenHeight);
+    void draw(SDL_Renderer* renderer);// ve
+    void randomizePosition(int screenWidth, int screenHeight);// random vi tri cho thuc an
     int getX() const;
     int getY() const;
     int x, y;

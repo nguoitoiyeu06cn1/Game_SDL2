@@ -24,7 +24,7 @@
 	<vector>
 	<cmath>
 
-1742739349 d:\2024ky2\ltnc\game\snake.h
+1743352134 d:\2024ky2\ltnc\game\snake.h
 	<vector>
 	"graphics.h"
 	<SDL.h>
@@ -46,7 +46,7 @@
 	<cstdlib>
 	<cmath>
 
-1743326205 d:\2024ky2\ltnc\game\aisnake.h
+1743352057 d:\2024ky2\ltnc\game\aisnake.h
 	<vector>
 	"snake.h"
 	"graphics.h"
@@ -71,7 +71,7 @@
 	"menu.h"
 	<iostream>
 
-1743326206 source:d:\2024ky2\ltnc\game\render.cpp
+1743331447 source:d:\2024ky2\ltnc\game\render.cpp
 	"render.h"
 	<string>
 

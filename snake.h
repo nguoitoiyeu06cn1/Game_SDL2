@@ -2,7 +2,7 @@
 #define SNAKE_H
 
 #include <vector>
-#include "graphics.h" // For drawCircle, and potentially SCREEN_WIDTH/HEIGHT if not global
+#include "graphics.h" // ve hinh tron cho thuc an va cac thu kha
 #include <SDL.h> // Needed for SDL_Renderer
 using namespace std;
 
@@ -19,9 +19,9 @@ public:
     void update(double velX, double velY);
     void draw(SDL_Renderer* renderer);
     void grow();
-    bool checkCollisions(const vector<SnakeSegment>& otherSnakeSegments);
-    bool checkCollision(int foodX, int foodY, int foodRadius);
-    bool checkSelfCollision();
+    bool checkCollisions(const vector<SnakeSegment>& otherSnakeSegments);// kiem tra va cham voi ran kha
+    bool checkCollision(int foodX, int foodY, int foodRadius);// kiem tra va cham voi thuc an
+    bool checkSelfCollision();// kiem tra va cham voi ban than
     void reset(int startX, int startY);
     SnakeSegment getHead() const;
     vector<SnakeSegment> getSegments() const;

@@ -10,7 +10,7 @@ int level = 1;
 int count_level = 0;
 bool hasLeveledUp = false;
 bool increase_level(int score){
-    int condition = 10 + level * 10;
+    int condition = 10 + level * 10;// cu 10 diem se co the tang level, tang muc do kho cho game
     // cout << "condition: " << condition << " score: " << score << endl;
     // cout << score - condition << endl;
     if((score - condition) >= 0)
