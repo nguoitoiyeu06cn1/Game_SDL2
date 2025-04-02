@@ -58,7 +58,8 @@ void drawCircle(SDL_Renderer* renderer, int centerX, int centerY, int radius) {
 
 void renderText(SDL_Renderer* renderer, TTF_Font* font, const string& text, int x, int y) {
     SDL_Color textColor = {255, 255, 255, 255};
-    SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), textColor);
+    SDL_Surface* textSurface = TTF_RenderText_Blended(font, text.c_str(), textColor);
+
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
     SDL_Rect renderQuad = {x, y, textSurface->w, textSurface->h};
     SDL_RenderCopy(renderer, textTexture, NULL, &renderQuad);

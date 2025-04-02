@@ -51,7 +51,7 @@ int main(int argc, char * argv[]) {
         return 0; // Người chơi muốn thoát game
     }
     Mix_PlayMusic(bgMusic, -1);
-    int score = 10 * selectedLevel;
+    int score = 10 * (selectedLevel - 1);
 
     // Khởi tạo số lượng rắn AI dựa trên cấp độ đã chọn
     createAIsnakes(selectedLevel, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -74,9 +74,9 @@ int main(int argc, char * argv[]) {
                         createAIsnakes(selectedLevel, SCREEN_WIDTH, SCREEN_HEIGHT); // Tạo lại rắn AI theo cấp độ đã chọn
                         aiSnake.update(snake.getHead().x, snake.getHead().y);
                         gameOver = false;
-                        score = 0;
+                       // score = 0;
                         count_score = 0;
-                        level = 0;
+                       // level = 0;
                         snake = Snake(SCREEN_WIDTH, SCREEN_HEIGHT);
                         food.randomizePosition(SCREEN_WIDTH, SCREEN_HEIGHT);
                         velX = 4;
@@ -111,7 +111,7 @@ int main(int argc, char * argv[]) {
                 }
             }
 
-            // if (snake.checkSelfCollision()) gameOver = true;
+             if (snake.checkSelfCollision()) gameOver = true;
 
             if (snake.checkCollision(food.getX(), food.getY(), 8)) {
                 Mix_PlayChannel(-1, eatSound, 0);
@@ -161,7 +161,7 @@ int main(int argc, char * argv[]) {
                                 createAIsnakes(level + 1, SCREEN_WIDTH, SCREEN_HEIGHT); //
                                 Mix_PlayMusic(bgMusic, -1);
                                 gameOver = false;
-                                score = 20 + (level-1) * 10;
+                                score = level * 10;
                                 level += 1;
                                 snake = Snake(SCREEN_WIDTH, SCREEN_HEIGHT); //
                                 food.randomizePosition(SCREEN_WIDTH, SCREEN_HEIGHT); //
@@ -182,7 +182,7 @@ int main(int argc, char * argv[]) {
 
         if (gameOver) {
             Mix_HaltMusic();
-            level = selectedLevel;
+            //level = selectedLevel;
             if(increase_level(score, level) == true){
 
                 Mix_PlayChannel(-1, endMusic, 0);
@@ -203,6 +203,7 @@ int main(int argc, char * argv[]) {
                             Mix_HaltMusic();
                             switch (event.key.keysym.sym){
                                 case SDLK_y:
+
                                     Mix_PlayMusic(bgMusic, -1);
                                     gameOver = false;
                                     score = 20 + (level-1) * 10;
@@ -248,13 +249,13 @@ int main(int argc, char * argv[]) {
                             gameOver = false;
                             Mix_PlayMusic(bgMusic, -1);
                             score = 0;
-                            level = 0;
+                            level = 1;
                             snake = Snake(SCREEN_WIDTH, SCREEN_HEIGHT); // Tạo snake mới
                             food.randomizePosition(SCREEN_WIDTH, SCREEN_HEIGHT); // Tạo thức ăn mới
                             velX = 4;
                             velY = 0;
                             useMouseControl = false;
-                            createAIsnakes(selectedLevel, SCREEN_WIDTH, SCREEN_HEIGHT); //Tạo lại rắn theo level đã chọn
+                            createAIsnakes(1, SCREEN_WIDTH, SCREEN_HEIGHT); //Tạo lại rắn theo level đã chọn
                             aiSnake.update(snake.getHead().x, snake.getHead().y);
                             aiSnake = AIsnake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, rand() % 4);
                             paused = false;

@@ -11,7 +11,9 @@ int level;
 int count_level = 0;
 bool hasLeveledUp = false;
 bool increase_level(int score, int level_){
-    int condition = 10 + level_ * 10;// cu 10 diem se co the tang level, tang muc do kho cho game
+    int condition;
+    condition = level_ * 10;
+    // cu 10 diem se co the tang level, tang muc do kho cho game
      cout << "condition: " << condition << " score: " << score << endl;
     // cout << score - condition << endl;
     if((score - condition) >= 0)
@@ -22,7 +24,10 @@ bool increase_level(int score, int level_){
         //cout << 1 << endl;
         return true;
     }
-    else return false;
+    else {
+        condition = 0;
+    }
+        return false;
 }
 void createAIsnakes(int numAIsnake, int SCREEN_WIDTH, int SCREEN_HEIGHT){
     for(int i = 0; i < numAIsnake; i++){

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1743555436 source:d:\2024ky2\ltnc\game\main.cpp
+1743596583 source:d:\2024ky2\ltnc\game\main.cpp
 	"libra.h"
 
 1743353788 source:d:\2024ky2\ltnc\game\food.cpp
@@ -37,7 +37,7 @@
 1743326205 d:\2024ky2\ltnc\game\utils.h
 	<string>
 
-1743326205 source:d:\2024ky2\ltnc\game\graphics.cpp
+1743594772 source:d:\2024ky2\ltnc\game\graphics.cpp
 	"graphics.h"
 	<iostream>
 
@@ -67,7 +67,7 @@
 	"utils.h"
 	"level.h"
 
-1743555589 source:d:\2024ky2\ltnc\game\level.cpp
+1743596622 source:d:\2024ky2\ltnc\game\level.cpp
 	"level.h"
 	"menu.h"
 	<SDL.h>
