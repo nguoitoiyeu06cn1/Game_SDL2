@@ -24,7 +24,7 @@ int main(int argc, char * argv[]) {
     if (endMusic == nullptr) {
         cout << "Failed to load endMusic music! SDL_mixer Error: " << Mix_GetError() << endl;
     }
-
+    Mix_PlayMusic(bgMusic, -1);
 
     srand(time(0));
     bool running = true;
@@ -46,12 +46,13 @@ int main(int argc, char * argv[]) {
     // Hiển thị menu chọn cấp độ
     int selectedLevel = showLevelSelectionMenu(renderer, font);
     int level = selectedLevel;
+    int score = 10 * (selectedLevel - 1);
     if (selectedLevel == -1) {
         close(window, renderer, font, texture);
         return 0; // Người chơi muốn thoát game
     }
-    Mix_PlayMusic(bgMusic, -1);
-    int score = 10 * (selectedLevel - 1);
+
+
 
     // Khởi tạo số lượng rắn AI dựa trên cấp độ đã chọn
     createAIsnakes(selectedLevel, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -111,7 +112,7 @@ int main(int argc, char * argv[]) {
                 }
             }
 
-             if (snake.checkSelfCollision()) gameOver = true;
+            //if (snake.checkSelfCollision()) gameOver = true;
 
             if (snake.checkCollision(food.getX(), food.getY(), 8)) {
                 Mix_PlayChannel(-1, eatSound, 0);

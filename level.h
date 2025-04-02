@@ -15,8 +15,6 @@ extern bool hasLeveledUp;// kiem tra len cap dung voi cap do
 extern int count_level;
 bool increase_level(int score_prerent, int level_prerent);
 
-int showLevelSelectionMenu(SDL_Renderer* renderer, TTF_Font* font);
-
 void createAIsnakes(int numAIsnake, int SCREEN_WIDTH, int SCREEN_HEIGHT);
 
 

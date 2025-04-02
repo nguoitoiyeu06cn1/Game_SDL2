@@ -16,8 +16,8 @@ public:
     void update(int playerSnakeX, int playerSnakeY); // cap nhat vi tri cho ran chu the
     void draw(SDL_Renderer * renderer);
     bool checkCollision(const Snake& playerSnake); //
-    bool checkSelfCollision(); // kiem tra va cham voi ban than
-    vector <SnakeSegment> getSegments() const; // Need to check collision with obstancle
+//    bool checkSelfCollision(); // kiem tra va cham voi ban than
+    const vector <SnakeSegment>& getSegments() const; // Need to check collision with obstancle
 private:
     vector <SnakeSegment> segments;
     double velX, velY;

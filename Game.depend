@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1743600389 source:d:\2024ky2\ltnc\game\main.cpp
+1743609859 source:d:\2024ky2\ltnc\game\main.cpp
 	"libra.h"
 
 1743600004 source:d:\2024ky2\ltnc\game\food.cpp
@@ -19,7 +19,7 @@
 	<SDL_mixer.h>
 	<string>
 
-1743353788 source:d:\2024ky2\ltnc\game\snake.cpp
+1743611780 source:d:\2024ky2\ltnc\game\snake.cpp
 	"snake.h"
 	"graphics.h"
 	<vector>
@@ -42,19 +42,19 @@
 	"graphics.h"
 	<iostream>
 
-1743326205 source:d:\2024ky2\ltnc\game\aisnake.cpp
+1743611976 source:d:\2024ky2\ltnc\game\aisnake.cpp
 	"AIsnake.h"
 	<cstdlib>
 	<cmath>
 
-1743353788 d:\2024ky2\ltnc\game\aisnake.h
+1743607729 d:\2024ky2\ltnc\game\aisnake.h
 	<vector>
 	"snake.h"
 	"graphics.h"
 	<SDL.h>
 	<SDL_image.h>
 
-1743555574 d:\2024ky2\ltnc\game\level.h
+1743608017 d:\2024ky2\ltnc\game\level.h
 	<iostream>
 	"utils.h"
 	"AIsnake.h"
