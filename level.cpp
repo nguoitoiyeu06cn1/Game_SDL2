@@ -14,7 +14,7 @@ bool increase_level(int score, int level_){
     int condition;
     condition = level_ * 10;
     // cu 10 diem se co the tang level, tang muc do kho cho game
-     cout << "condition: " << condition << " score: " << score << endl;
+    // cout << "condition: " << condition << " score: " << score << endl;
     // cout << score - condition << endl;
     if((score - condition) >= 0)
     {

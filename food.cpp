@@ -1,7 +1,8 @@
 #include "food.h"
-#include <cstdlib> //
+#include <cstdlib>
 #include "graphics.h"
-
+#include <iostream>
+using namespace std;
 Food::Food(int screenWidth, int screenHeight) {
     randomizePosition(screenWidth, screenHeight);
 }
@@ -15,6 +16,7 @@ void Food::randomizePosition(int screenWidth, int screenHeight) {
     for (int attempt = 0; attempt < maxAttempts; ++attempt) {
         x = rand() % (screenWidth - 2 * FOOD_RADIUS) + FOOD_RADIUS;
         y = rand() % (screenHeight - 2 * FOOD_RADIUS) + FOOD_RADIUS;
+        cout<< "x: " << x << "y: " << y << endl;
         if (x > 200 && y > 120) {
             return; // Vị trí hợp lệ, thoát khỏi hàm
         }
@@ -23,7 +25,7 @@ void Food::randomizePosition(int screenWidth, int screenHeight) {
     // hãy đặt một vị trí mặc định nào đó (hoặc xử lý lỗi)
     x = screenWidth / 2;
     y = screenHeight / 2;
-   // std::cout << "Không tìm thấy vị trí hợp lệ cho thức ăn sau " << maxAttempts << " lần thử." << std::endl;
+    //std::cout << "Không tìm thấy vị trí hợp lệ cho thức ăn sau " << maxAttempts << " lần thử." << std::endl;
 }
 
 int Food::getX() const {

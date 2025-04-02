@@ -1,11 +1,12 @@
 # depslib dependency file v1.0
-1743596583 source:d:\2024ky2\ltnc\game\main.cpp
+1743600389 source:d:\2024ky2\ltnc\game\main.cpp
 	"libra.h"
 
-1743353788 source:d:\2024ky2\ltnc\game\food.cpp
+1743600004 source:d:\2024ky2\ltnc\game\food.cpp
 	"food.h"
 	<cstdlib>
 	"graphics.h"
+	<iostream>
 
 1743353788 d:\2024ky2\ltnc\game\food.h
 	"SDL.h"
@@ -67,7 +68,7 @@
 	"utils.h"
 	"level.h"
 
-1743596622 source:d:\2024ky2\ltnc\game\level.cpp
+1743600505 source:d:\2024ky2\ltnc\game\level.cpp
 	"level.h"
 	"menu.h"
 	<SDL.h>

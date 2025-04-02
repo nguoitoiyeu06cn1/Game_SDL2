@@ -203,10 +203,9 @@ int main(int argc, char * argv[]) {
                             Mix_HaltMusic();
                             switch (event.key.keysym.sym){
                                 case SDLK_y:
-
                                     Mix_PlayMusic(bgMusic, -1);
                                     gameOver = false;
-                                    score = 20 + (level-1) * 10;
+                                    score = level * 10;
                                     count_score = 0;
                                     level += 1;
                                     snake = Snake(SCREEN_WIDTH, SCREEN_HEIGHT); // Tạo snake mới
