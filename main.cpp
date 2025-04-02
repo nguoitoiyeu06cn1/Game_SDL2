@@ -45,13 +45,13 @@ int main(int argc, char * argv[]) {
 
     // Hiển thị menu chọn cấp độ
     int selectedLevel = showLevelSelectionMenu(renderer, font);
+    int level = selectedLevel;
     if (selectedLevel == -1) {
         close(window, renderer, font, texture);
         return 0; // Người chơi muốn thoát game
     }
     Mix_PlayMusic(bgMusic, -1);
     int score = 10 * selectedLevel;
-    int level = selectedLevel;
 
     // Khởi tạo số lượng rắn AI dựa trên cấp độ đã chọn
     createAIsnakes(selectedLevel, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -156,7 +156,7 @@ int main(int argc, char * argv[]) {
                         case SDLK_SPACE:
                             paused = false; Mix_PlayMusic(bgMusic, -1); break;
                         case SDLK_l:
-                            if(increase_level(score) == true){
+                            if(increase_level(score, level) == true){
                                 aiSnakes.clear(); // clear het cac ran ai cu
                                 createAIsnakes(level + 1, SCREEN_WIDTH, SCREEN_HEIGHT); //
                                 Mix_PlayMusic(bgMusic, -1);
@@ -178,12 +178,13 @@ int main(int argc, char * argv[]) {
             }
         }
 
-        bool level_up = increase_level(score);
+        bool level_up = increase_level(score, level);
 
         if (gameOver) {
             Mix_HaltMusic();
+            level = selectedLevel;
+            if(increase_level(score, level) == true){
 
-            if(increase_level(score) == true){
                 Mix_PlayChannel(-1, endMusic, 0);
                 print_level_up(renderer, font);
                 SDL_RenderPresent(renderer);

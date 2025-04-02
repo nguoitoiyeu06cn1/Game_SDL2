@@ -4,6 +4,7 @@
 #include <iostream>
 #include "utils.h"
 #include "AIsnake.h"
+#include "menu.h"
 #include "graphics.h"
 
 extern vector <AIsnake> aiSnakes;
@@ -12,7 +13,7 @@ extern int score;
 extern int level;
 extern bool hasLeveledUp;// kiem tra len cap dung voi cap do
 extern int count_level;
-bool increase_level(int score_prerent);
+bool increase_level(int score_prerent, int level_prerent);
 
 int showLevelSelectionMenu(SDL_Renderer* renderer, TTF_Font* font);
 
